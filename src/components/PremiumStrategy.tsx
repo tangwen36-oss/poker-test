@@ -84,7 +84,7 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
           <ChevronLeft className="w-5 h-5" />
         </button>
         <div className="flex items-center gap-1.5">
-          <span className="text-xs font-bold text-zinc-200 tracking-wider">你的专属进阶策略</span>
+          <span className="text-sm font-bold text-zinc-200 tracking-wider">你的专属进阶策略</span>
         </div>
         <div className="w-9" />
       </div>
@@ -103,12 +103,12 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
           <div className="relative z-10 flex flex-col items-center space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 shadow-[0_0_15px_rgba(168,85,247,0.1)] backdrop-blur-sm">
               <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse shadow-[0_0_8px_rgba(168,85,247,0.8)]" />
-              <span className="text-xs text-purple-300 font-bold tracking-widest uppercase">
+              <span className="text-sm text-purple-300 font-bold tracking-widest uppercase">
                 {data.heroSubtitle}
               </span>
             </div>
             
-            <h1 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-400 tracking-tight drop-shadow-sm">
+            <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-400 tracking-tight drop-shadow-sm">
               {data.heroTitle}
             </h1>
           </div>
@@ -118,7 +118,7 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
         <section className="w-full px-4 py-4 border-b border-purple-900/30 bg-transparent">
           <div className="flex items-center gap-2 mb-2">
             <div className="w-1 h-3.5 bg-zinc-500 rounded-full" />
-            <h2 className="text-sm font-bold text-zinc-100 tracking-wider">你的风格双刃剑</h2>
+            <h2 className="text-base font-bold text-zinc-100 tracking-wider">你的风格双刃剑</h2>
           </div>
           <div className="flex flex-col border-y border-purple-900/40 bg-purple-950/20 -mx-4 px-4">
             {data.profile.table.map((row: any, idx: number) => {
@@ -127,16 +127,16 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
                 <div key={idx} className={`py-2.5 flex flex-col gap-1 ${idx !== data.profile.table.length - 1 ? 'border-b border-purple-900/30' : ''}`}>
                   <div className="flex items-center gap-1.5">
                     <Icon className="w-3.5 h-3.5 text-amber-500/80" />
-                    <span className="text-xs font-bold text-zinc-200">{row.label}</span>
+                    <span className="text-sm font-bold text-zinc-200">{row.label}</span>
                   </div>
-                  <span className="text-xs text-zinc-400 leading-normal">{renderHighlight(row.value, 'subtle-zinc')}</span>
+                  <span className="text-sm text-zinc-400 leading-normal">{renderHighlight(row.value, 'subtle-zinc')}</span>
                 </div>
               );
             })}
           </div>
           <div className="mt-2 bg-amber-500/5 border border-amber-500/10 p-3 rounded-xl flex items-start gap-2 w-full">
             <div className="w-1 h-full min-h-[16px] bg-amber-500/50 rounded-full shrink-0" />
-            <p className="text-xs text-amber-100/90 font-medium leading-normal">
+            <p className="text-sm text-amber-100/90 font-medium leading-normal">
               {renderHighlight(data.profile.summary, 'glow-amber')}
             </p>
           </div>
@@ -146,17 +146,17 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
         <section className="w-full px-4 py-4 border-b border-purple-900/30 bg-transparent">
           <div className="flex items-center gap-2 mb-2">
             <div className="w-1 h-3.5 bg-zinc-500 rounded-full" />
-            <h2 className="text-sm font-bold text-zinc-100 tracking-wider">你的优势与瓶颈</h2>
+            <h2 className="text-base font-bold text-zinc-100 tracking-wider">你的优势与瓶颈</h2>
           </div>
           <div className="flex flex-col gap-2 w-full">
             <div className="bg-purple-950/30 border border-purple-900/40 rounded-xl p-3 flex gap-3 items-start relative overflow-hidden w-full">
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500/50" />
               <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
               <div className="w-full">
-                <span className="text-xs font-bold text-zinc-200 block mb-1.5">已具备的护城河</span>
+                <span className="text-sm font-bold text-zinc-200 block mb-1.5">已具备的护城河</span>
                 <ul className="space-y-1 w-full">
                   {data.gap.good.map((item: string, idx: number) => (
-                    <li key={idx} className="text-xs text-zinc-400 leading-normal">{renderHighlight(item, 'soft-emerald')}</li>
+                    <li key={idx} className="text-sm text-zinc-400 leading-normal">{renderHighlight(item, 'soft-emerald')}</li>
                   ))}
                 </ul>
               </div>
@@ -165,10 +165,10 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-rose-500/50" />
               <XCircle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
               <div className="w-full">
-                <span className="text-xs font-bold text-zinc-200 block mb-1.5">致命的短板</span>
+                <span className="text-sm font-bold text-zinc-200 block mb-1.5">致命的短板</span>
                 <ul className="space-y-1 w-full">
                   {data.gap.bad.map((item: string, idx: number) => (
-                    <li key={idx} className="text-xs text-zinc-400 leading-normal">{renderHighlight(item, 'soft-rose')}</li>
+                    <li key={idx} className="text-sm text-zinc-400 leading-normal">{renderHighlight(item, 'soft-rose')}</li>
                   ))}
                 </ul>
               </div>
@@ -180,13 +180,13 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
         <section className="w-full px-4 py-4 border-b border-purple-900/30 bg-transparent">
           <div className="flex items-center gap-2 mb-2">
             <div className="w-1 h-3.5 bg-zinc-500 rounded-full" />
-            <h2 className="text-sm font-bold text-zinc-100 tracking-wider">关键亏损场景</h2>
+            <h2 className="text-base font-bold text-zinc-100 tracking-wider">关键亏损场景</h2>
           </div>
           <div className="space-y-2 w-full">
             {data.scenarios.map((scenario: any, idx: number) => (
               <div key={idx} className="bg-purple-950/30 border border-purple-900/40 rounded-xl p-3 w-full">
-                <h3 className="text-sm font-bold text-zinc-100 mb-2 flex items-center gap-2">
-                  <span className="text-amber-500 font-black text-sm">0{idx + 1}</span>
+                <h3 className="text-base font-bold text-zinc-100 mb-2 flex items-center gap-2">
+                  <span className="text-amber-500 font-black text-base">0{idx + 1}</span>
                   {scenario.title}
                 </h3>
                 
@@ -195,9 +195,9 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
                   <div className="mb-2 bg-black/40 rounded-lg p-2.5 border border-white/5 w-full">
                     <div className="flex items-center gap-1.5 mb-1">
                       <BookOpen className="w-3.5 h-3.5 text-zinc-500" />
-                      <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">牌局举例</span>
+                      <span className="text-sm font-bold text-zinc-400 uppercase tracking-wider">牌局举例</span>
                     </div>
-                    <p className="text-xs text-zinc-300 leading-normal">{renderHighlight(scenario.example, 'code-zinc')}</p>
+                    <p className="text-sm text-zinc-300 leading-normal">{renderHighlight(scenario.example, 'code-zinc')}</p>
                   </div>
                 )}
 
@@ -205,8 +205,8 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
                   <div className="bg-rose-500/5 rounded-lg p-2.5 border border-rose-500/10 flex gap-2 items-start w-full">
                     <AlertTriangle className="w-3.5 h-3.5 text-rose-400 shrink-0 mt-0.5" />
                     <div className="w-full">
-                      <span className="text-xs font-bold text-rose-400/80 uppercase tracking-wider block mb-1">当前痛点</span>
-                      <p className="text-xs text-zinc-300 leading-normal">
+                      <span className="text-sm font-bold text-rose-400/80 uppercase tracking-wider block mb-1">当前痛点</span>
+                      <p className="text-sm text-zinc-300 leading-normal">
                         <span className="text-zinc-400 block mb-2">表现：{renderHighlight(scenario.current, 'soft-rose')}</span>
                         <span className="text-rose-300 font-medium">导致：{renderHighlight(scenario.problem, 'soft-rose')}</span>
                       </p>
@@ -215,8 +215,8 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
                   <div className="bg-emerald-500/5 rounded-lg p-2.5 border border-emerald-500/10 flex gap-2 items-start w-full">
                     <Lightbulb className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
                     <div className="w-full">
-                      <span className="text-xs font-bold text-emerald-400/80 uppercase tracking-wider block mb-1">优化建议</span>
-                      <p className="text-xs text-emerald-100/90 font-medium leading-normal">
+                      <span className="text-sm font-bold text-emerald-400/80 uppercase tracking-wider block mb-1">优化建议</span>
+                      <p className="text-sm text-emerald-100/90 font-medium leading-normal">
                         {renderHighlight(scenario.advice, 'marker-emerald')}
                       </p>
                     </div>
@@ -231,29 +231,29 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
         <section className="w-full px-4 py-4 border-b border-purple-900/30 bg-transparent">
           <div className="flex items-center gap-2 mb-2">
             <div className="w-1 h-3.5 bg-purple-500 rounded-full" />
-            <h2 className="text-sm font-bold text-zinc-100 tracking-wider">线下实战的真相</h2>
+            <h2 className="text-base font-bold text-zinc-100 tracking-wider">线下实战的真相</h2>
           </div>
           <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-900/20 to-zinc-900 border border-purple-500/20 p-3 w-full mb-2">
             <Quote className="absolute -top-2 -right-2 w-12 h-12 text-purple-500/10 rotate-12" />
             <div className="space-y-2 relative z-10 w-full">
               <div className="w-full">
-                <span className="text-xs font-bold text-purple-400 uppercase tracking-wider flex items-center gap-1.5">
+                <span className="text-sm font-bold text-purple-400 uppercase tracking-wider flex items-center gap-1.5">
                   <span className="w-1 h-1 rounded-full bg-purple-400" />
                   {data.exploit.items[0].label}
                 </span>
-                <p className="text-xs text-zinc-300 mt-1 font-medium leading-normal">{renderHighlight(data.exploit.items[0].value, 'line-purple')}</p>
+                <p className="text-sm text-zinc-300 mt-1 font-medium leading-normal">{renderHighlight(data.exploit.items[0].value, 'line-purple')}</p>
               </div>
               <div className="h-px w-full bg-gradient-to-r from-purple-500/20 to-transparent" />
               <div className="w-full">
-                <span className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                <span className="text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
                   <span className="w-1 h-1 rounded-full bg-amber-400" />
                   {data.exploit.items[1].label}
                 </span>
-                <p className="text-xs text-amber-100/90 mt-1 font-medium leading-normal">{renderHighlight(data.exploit.items[1].value, 'line-amber')}</p>
+                <p className="text-sm text-amber-100/90 mt-1 font-medium leading-normal">{renderHighlight(data.exploit.items[1].value, 'line-amber')}</p>
               </div>
             </div>
           </div>
-          <p className="text-xs text-center text-zinc-400 font-medium px-2 leading-normal">
+          <p className="text-sm text-center text-zinc-400 font-medium px-2 leading-normal">
             {renderHighlight(data.exploit.summary, 'gradient-text')}
           </p>
         </section>
@@ -262,7 +262,7 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
         <section className="w-full px-4 py-4 border-b border-purple-900/30 bg-transparent">
           <div className="flex items-center gap-2 mb-2">
             <div className="w-1 h-3.5 bg-amber-400 rounded-full shadow-[0_0_10px_rgba(251,191,36,0.5)]" />
-            <h2 className="text-sm font-bold text-zinc-100 tracking-wider">马上能用的3个实战技巧</h2>
+            <h2 className="text-base font-bold text-zinc-100 tracking-wider">马上能用的3个实战技巧</h2>
           </div>
           <div className="space-y-2 w-full">
             {data.rules.map((rule: any, idx: number) => (
@@ -271,28 +271,28 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
                 
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-5 h-5 rounded-full bg-amber-500/10 flex items-center justify-center shrink-0 border border-amber-500/20">
-                    <span className="text-amber-400 font-black text-xs">{idx+1}</span>
+                    <span className="text-amber-400 font-black text-sm">{idx+1}</span>
                   </div>
-                  <h3 className="text-sm font-bold text-zinc-100">{rule.title}</h3>
+                  <h3 className="text-base font-bold text-zinc-100">{rule.title}</h3>
                 </div>
                 
-                <p className="text-xs text-zinc-400 mb-2 leading-normal">{renderHighlight(rule.desc, 'bold-amber')}</p>
+                <p className="text-sm text-zinc-400 mb-2 leading-normal">{renderHighlight(rule.desc, 'bold-amber')}</p>
                 
                 {rule.example && (
                   <div className="mb-2 bg-black/40 rounded-lg p-2.5 border border-white/5 w-full">
                     <div className="flex items-center gap-1.5 mb-1">
                       <BookOpen className="w-3.5 h-3.5 text-zinc-500" />
-                      <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">实战举例</span>
+                      <span className="text-sm font-bold text-zinc-400 uppercase tracking-wider">实战举例</span>
                     </div>
-                    <p className="text-xs text-zinc-300 leading-normal">{renderHighlight(rule.example, 'code-zinc')}</p>
+                    <p className="text-sm text-zinc-300 leading-normal">{renderHighlight(rule.example, 'code-zinc')}</p>
                   </div>
                 )}
 
                 <div className="bg-amber-500/10 rounded-lg p-2.5 flex items-start gap-2 border border-amber-500/20 w-full">
                   <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
                   <div className="w-full">
-                    <span className="text-xs font-bold text-amber-500/80 uppercase tracking-wider block mb-1">执行动作</span>
-                    <span className="text-xs font-bold text-amber-100 leading-normal">{renderHighlight(rule.action, 'marker-amber')}</span>
+                    <span className="text-sm font-bold text-amber-500/80 uppercase tracking-wider block mb-1">执行动作</span>
+                    <span className="text-sm font-bold text-amber-100 leading-normal">{renderHighlight(rule.action, 'marker-amber')}</span>
                   </div>
                 </div>
               </div>
@@ -314,7 +314,7 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
           </div>
           <div className="text-center mt-4">
             {data.finalQuote.split('\n').map((line: string, i: number) => (
-              <p key={i} className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 to-zinc-500 leading-normal tracking-wide">
+              <p key={i} className="text-base font-black text-transparent bg-clip-text bg-gradient-to-r from-zinc-200 to-zinc-500 leading-normal tracking-wide">
                 {line}
               </p>
             ))}
@@ -325,7 +325,7 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
         <div className="w-full px-4 pt-2 pb-8">
           <button 
             onClick={() => setIsQrModalOpen(true)}
-            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-purple-500 text-white font-bold text-sm shadow-[0_0_20px_rgba(168,85,247,0.2)] hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-shadow flex items-center justify-center gap-2"
+            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-purple-500 text-white font-bold text-base shadow-[0_0_20px_rgba(168,85,247,0.2)] hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] transition-shadow flex items-center justify-center gap-2"
           >
             加入策略交流群
           </button>
@@ -359,10 +359,10 @@ export const PremiumStrategy: React.FC<PremiumStrategyProps> = ({ answers, quest
               <div className="w-48 h-48 mx-auto bg-zinc-800 rounded-xl border border-zinc-700 flex items-center justify-center mb-4 overflow-hidden relative">
                 {/* Placeholder for QR Code */}
                 <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, #a855f7 10px, #a855f7 20px)' }} />
-                <span className="text-zinc-500 font-medium relative z-10 text-sm">二维码占位区</span>
+                <span className="text-zinc-500 font-medium relative z-10 text-base">二维码占位区</span>
               </div>
               
-              <p className="text-sm text-zinc-400 text-center">
+              <p className="text-base text-zinc-400 text-center">
                 长按可保存图片
               </p>
             </motion.div>
