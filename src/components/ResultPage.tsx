@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Lock, Check, Download, RotateCcw, Swords, Bomb, Rocket, X, Share2 } from 'lucide-react';
-import { toPng } from 'html-to-image';
+import { Lock, Check, RotateCcw, Swords, Bomb, Rocket, X } from 'lucide-react';
 import { getFinalResult } from '../lib/scoring';
 import { questions } from '../data/questions';
 import { resultsData } from '../data/results';
@@ -31,9 +30,7 @@ export const ResultPage: React.FC<{
   // Frontend states
   const [isUnlocking, setIsUnlocking] = useState(false);
   const [unlockError, setUnlockError] = useState('');
-  const [saveImageStatus, setSaveImageStatus] = useState<'idle' | 'generating' | 'success' | 'error'>('idle');
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
-  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
 
   const match = resultInfo.name.match(/(.+?)（(.+?)）/);
   const prefix = match ? match[1] : resultInfo.name;
@@ -48,36 +45,6 @@ export const ResultPage: React.FC<{
   ) : (
     resultInfo.comment
   );
-
-  const handleDownload = async () => {
-    if (saveImageStatus === 'generating') return;
-    
-    setSaveImageStatus('generating');
-    const element = document.getElementById('result-snapshot');
-    if (!element) {
-      setSaveImageStatus('error');
-      setTimeout(() => setSaveImageStatus('idle'), 3000);
-      return;
-    }
-    
-    try {
-      const dataUrl = await toPng(element, {
-        cacheBust: true,
-        pixelRatio: 2,
-        backgroundColor: '#1e103c',
-        skipFonts: true,
-      });
-
-      setPreviewImageUrl(dataUrl);
-      
-      setSaveImageStatus('success');
-      setTimeout(() => setSaveImageStatus('idle'), 3000);
-    } catch (err) {
-      console.error('Failed to save image', err);
-      setSaveImageStatus('error');
-      setTimeout(() => setSaveImageStatus('idle'), 3000);
-    }
-  };
 
   const handleUnlock = async () => {
     if (hasPaid) {
@@ -129,23 +96,6 @@ export const ResultPage: React.FC<{
       setIsUnlocking(false);
       setUnlockError('网络异常，请重试');
       setTimeout(() => setUnlockError(''), 4000);
-    }
-  };
-
-  const handleShare = async () => {
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: '我的德州扑克玩家画像',
-          text: `我是【${resultInfo.name}】！快来测测你的德州扑克玩家画像，解锁专属盈利策略！`,
-          url: window.location.href,
-        });
-      } else {
-        await navigator.clipboard.writeText(window.location.href);
-        alert('链接已复制，快去分享给牌友吧！');
-      }
-    } catch (err) {
-      console.error('Error sharing:', err);
     }
   };
 
@@ -255,7 +205,7 @@ export const ResultPage: React.FC<{
             <div className="space-y-3">
               {indices.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3">
-                  <span className="text-xs text-zinc-300 font-medium w-14 text-right">{item.label}</span>
+                  <span className="text-[11px] text-zinc-300 font-medium w-14 text-right">{item.label}</span>
                   <div className="flex-1 h-2 bg-black/60 rounded-full overflow-hidden border border-white/5 relative">
                     <motion.div
                       initial={{ width: 0 }}
@@ -352,41 +302,10 @@ export const ResultPage: React.FC<{
         </div>
       </div>
 
-      {/* 保存截图按钮 */}
-      <div className="px-5 pb-4 pt-2 bg-zinc-950 shrink-0 z-10 relative flex gap-3">
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-24 bg-purple-600/10 blur-2xl" />
-        </div>
-        <button 
-          onClick={handleDownload}
-          disabled={saveImageStatus === 'generating'}
-          className="flex-1 p-3.5 rounded-xl bg-white/5 hover:bg-white/10 border-t-[1px] border-white/10 active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 z-10 disabled:opacity-70 disabled:cursor-not-allowed"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/0 to-purple-500/0 group-hover:from-purple-500/10 transition-colors" />
-          <Download className={`w-4 h-4 text-zinc-200 relative z-10 ${saveImageStatus === 'generating' ? 'animate-bounce' : ''}`} />
-          <span className="relative z-10 text-sm text-zinc-200 font-bold leading-relaxed block">
-            {saveImageStatus === 'generating' ? '生成中...' : 
-             saveImageStatus === 'success' ? '长按图片保存' : 
-             saveImageStatus === 'error' ? '生成失败' : 
-             '保存图片'}
-          </span>
-        </button>
-        <button 
-          onClick={handleShare}
-          className="flex-1 p-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 border-t-[1px] border-purple-400/30 active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 z-10 shadow-[0_0_20px_rgba(147,51,234,0.3)]"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-          <Share2 className="w-4 h-4 text-white relative z-10" />
-          <span className="relative z-10 text-sm text-white font-bold leading-relaxed block">
-            分享给牌友
-          </span>
-        </button>
-      </div>
-
       {/* 付费区 */}
-      <div className="m-4 mt-8 bg-zinc-900/95 backdrop-blur-xl rounded-[24px] p-5 pt-8 relative shadow-[0_10px_40px_rgba(0,0,0,0.8),0_0_20px_rgba(168,85,247,0.15)] border border-zinc-700/50 shrink-0 z-20">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center border-2 border-zinc-700 shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
-          <Lock className="w-5 h-5 text-purple-400" />
+      <div className="m-4 mt-10 bg-zinc-900/95 backdrop-blur-xl rounded-[24px] p-5 pt-10 relative shadow-[0_10px_40px_rgba(0,0,0,0.8),0_0_20px_rgba(168,85,247,0.15)] border border-zinc-700/50 shrink-0 z-20">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-zinc-800 rounded-full flex items-center justify-center border-2 border-zinc-700 shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
+          <Lock className="w-6 h-6 text-purple-400" />
         </div>
         
         <h3 className="text-lg font-black text-white text-center mb-4 tracking-wide">
@@ -462,38 +381,6 @@ export const ResultPage: React.FC<{
 
       {/* QR Code Modal */}
       <AnimatePresence>
-        {previewImageUrl && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm"
-            onClick={() => setPreviewImageUrl(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.92, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.92, opacity: 0, y: 20 }}
-              className="bg-zinc-950 border border-zinc-800 rounded-3xl p-4 max-w-sm w-full shadow-2xl relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => setPreviewImageUrl(null)}
-                className="absolute top-3 right-3 text-zinc-400 hover:text-white transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <h3 className="text-base font-bold text-white text-center mb-4">长按图片保存到相册</h3>
-
-              <img
-                src={previewImageUrl}
-                alt="德州牌桌玩家画像预览"
-                className="w-full rounded-2xl border border-zinc-800 shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
-              />
-            </motion.div>
-          </motion.div>
-        )}
         {isQrModalOpen && (
           <motion.div
             initial={{ opacity: 0 }}
