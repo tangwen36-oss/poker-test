@@ -328,7 +328,7 @@ https://poker.life-algo.xyz/`;
         </div>
         <button
           onClick={handleShare}
-          className="w-full p-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 border-t-[1px] border-purple-400/30 active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 z-10 shadow-[0_0_20px_rgba(147,51,234,0.3)]"
+          className="w-full p-3.5 rounded-xl bg-black hover:bg-zinc-900 border border-white/10 active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 z-10 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
           <Share2 className="w-4 h-4 text-white relative z-10" />
@@ -339,17 +339,18 @@ https://poker.life-algo.xyz/`;
       </div>
 
       {/* 付费区 */}
-      <div className="m-4 mt-10 bg-zinc-900/95 backdrop-blur-xl rounded-[24px] p-5 pt-10 relative shadow-[0_10px_40px_rgba(0,0,0,0.8),0_0_20px_rgba(168,85,247,0.15)] border border-zinc-700/50 shrink-0 z-20">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-zinc-800 rounded-full flex items-center justify-center border-2 border-zinc-700 shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
-          <Lock className="w-6 h-6 text-purple-400" />
+      <div className="m-4 mt-10 bg-gradient-to-br from-[#3f1768] via-[#2a0f4a] to-[#120919] backdrop-blur-xl rounded-[24px] p-5 pt-10 relative shadow-[0_18px_50px_rgba(0,0,0,0.75),0_0_28px_rgba(168,85,247,0.32)] border border-purple-400/25 shrink-0 z-20 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(216,180,254,0.22),transparent_48%)] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-black rounded-full flex items-center justify-center border-2 border-purple-300/30 shadow-[0_8px_18px_rgba(0,0,0,0.45)]">
+          <Lock className="w-6 h-6 text-purple-300" />
         </div>
         
-        <h3 className="text-lg font-black text-white text-center mb-4 tracking-wide">
+        <h3 className="relative text-lg font-black text-white text-center mb-4 tracking-wide">
           解锁你的最优打法策略
         </h3>
         
-        <div className="bg-black/30 rounded-xl p-4 mb-5 border border-white/5">
-          <p className="text-xs text-zinc-500 mb-3 font-bold tracking-widest uppercase text-center">解锁后你将获得：</p>
+        <div className="relative bg-black/20 rounded-xl p-4 mb-5 border border-white/10">
+          <p className="text-xs text-purple-100/70 mb-3 font-bold tracking-widest uppercase text-center">解锁后你将获得：</p>
           <div className="flex justify-center">
             <ul className="space-y-3 inline-block text-left">
               {[
@@ -358,8 +359,8 @@ https://poker.life-algo.xyz/`;
                 "你应保留及重点修正的打法习惯",
                 "一套适合你的稳定正收益打法模型"
               ].map((item, idx) => (
-                <li key={idx} className="flex items-start gap-2.5 text-sm text-zinc-300 font-medium leading-relaxed">
-                  <Check className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />
+                <li key={idx} className="flex items-start gap-2.5 text-sm text-purple-50/92 font-medium leading-relaxed">
+                  <Check className="w-4 h-4 text-purple-200 shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -367,20 +368,14 @@ https://poker.life-algo.xyz/`;
           </div>
         </div>
 
-        <div className="flex gap-3 mb-3">
-          <button 
-            onClick={() => setIsQrModalOpen(true)}
-            className="flex-1 py-3.5 rounded-xl bg-zinc-800/80 hover:bg-zinc-700 border border-zinc-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-inner"
-          >
-            <span className="text-sm text-zinc-300 font-bold tracking-wide">策略交流</span>
-          </button>
+        <div className="mb-3">
           <button 
             onClick={handleUnlock}
             disabled={isUnlocking || hasPaid}
-            className={`flex-[1.5] py-3.5 rounded-xl border-t-[1px] active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(168,85,247,0.4)] disabled:opacity-80 disabled:cursor-not-allowed disabled:active:scale-100 ${
+            className={`w-full py-3.5 rounded-xl border active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 shadow-[0_12px_28px_rgba(0,0,0,0.3)] disabled:opacity-80 disabled:cursor-not-allowed disabled:active:scale-100 ${
               hasPaid 
                 ? 'bg-zinc-800 border-zinc-600 text-zinc-400' 
-                : 'bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 border-purple-400/50 text-white'
+                : 'bg-black hover:bg-zinc-900 border-white/10 text-white'
             }`}
           >
             {!hasPaid && !isUnlocking && (

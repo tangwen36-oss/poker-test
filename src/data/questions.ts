@@ -83,7 +83,7 @@ export const questions = [
     players: "6人桌",
     stack: "100BB",
     position: "UTG+1",
-    cards: [{ rank: "J", suit: "♣", color: "text-slate-800" }, { rank: "T", suit: "♣", color: "text-slate-800" }],
+    cards: [{ rank: "J", suit: "♣", color: "text-slate-800" }, { rank: "10", suit: "♣", color: "text-slate-800" }],
     communityCards: [],
     scenario: "你今晚牌运极差，已经“水下”三个买入了。前置枪口位弃牌，轮到你。",
     options: [
