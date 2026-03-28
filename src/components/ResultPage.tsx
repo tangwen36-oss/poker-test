@@ -31,10 +31,15 @@ export const ResultPage: React.FC<{
   const [isUnlocking, setIsUnlocking] = useState(false);
   const [unlockError, setUnlockError] = useState('');
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'done'>('idle');
 
   const match = resultInfo.name.match(/(.+?)（(.+?)）/);
   const prefix = match ? match[1] : resultInfo.name;
   const mainName = match ? match[2] : resultInfo.name;
+  const shareText = `我测了个德州形象测试
+结果说我是${mainName}😂
+https://poker.life-algo.xyz/`;
 
   const displayComment = tiltFlag ? (
     <>
@@ -100,19 +105,17 @@ export const ResultPage: React.FC<{
   };
 
   const handleShare = async () => {
+    setCopyStatus('idle');
+    setIsShareModalOpen(true);
+  };
+
+  const handleCopyShareText = async () => {
     try {
-      if (navigator.share) {
-        await navigator.share({
-          title: '我的德州扑克玩家画像',
-          text: `我是【${resultInfo.name}】！快来测测你的德州扑克玩家画像，解锁专属盈利策略！`,
-          url: window.location.href,
-        });
-      } else {
-        await navigator.clipboard.writeText(window.location.href);
-        alert('链接已复制，快去分享给牌友吧！');
-      }
+      await navigator.clipboard.writeText(shareText);
+      setCopyStatus('done');
+      setTimeout(() => setCopyStatus('idle'), 2000);
     } catch (err) {
-      console.error('Error sharing:', err);
+      console.error('Failed to copy share text', err);
     }
   };
 
@@ -191,7 +194,7 @@ export const ResultPage: React.FC<{
                 <span>{prefix}</span>
               </div>
               <h1 
-                className="text-[4.5rem] leading-none font-black text-cyan-50 tracking-tighter [text-shadow:0_4px_16px_rgba(0,0,0,0.8)] italic transform -rotate-2 pr-4 pt-2 pb-2"
+                className="text-[5rem] leading-none font-black text-cyan-50 tracking-tighter [text-shadow:0_4px_16px_rgba(0,0,0,0.8)] italic transform -rotate-2 pr-4 pt-2 pb-2"
               >
                 {mainName}
               </h1>
@@ -248,7 +251,7 @@ export const ResultPage: React.FC<{
               </div>
               <ul className="space-y-2 mt-auto relative z-10">
                 {resultInfo.traits.map((item: string, idx: number) => (
-                  <li key={idx} className="flex items-start gap-1.5 text-xs text-zinc-300 font-medium leading-tight">
+                  <li key={idx} className="flex items-start gap-1.5 text-sm text-zinc-300 font-medium leading-tight">
                     <div className="w-1 h-1 rounded-full bg-cyan-400 shadow-[0_0_5px_rgba(34,211,238,0.8)] shrink-0 mt-1" />
                     <span>{item}</span>
                   </li>
@@ -265,12 +268,12 @@ export const ResultPage: React.FC<{
               </div>
               <ul className="space-y-2 mt-auto relative z-10">
                 {Array.isArray(resultInfo.leak) ? resultInfo.leak.map((item: string, idx: number) => (
-                  <li key={idx} className="flex items-start gap-1.5 text-xs text-zinc-300 font-medium leading-tight">
+                  <li key={idx} className="flex items-start gap-1.5 text-sm text-zinc-300 font-medium leading-tight">
                     <div className="w-1 h-1 rounded-full bg-rose-400 shadow-[0_0_5px_rgba(251,113,133,0.8)] shrink-0 mt-1" />
                     <span>{item}</span>
                   </li>
                 )) : (
-                  <li className="flex items-start gap-1.5 text-xs text-zinc-300 font-medium leading-tight">
+                  <li className="flex items-start gap-1.5 text-sm text-zinc-300 font-medium leading-tight">
                     <div className="w-1 h-1 rounded-full bg-rose-400 shadow-[0_0_5px_rgba(251,113,133,0.8)] shrink-0 mt-1" />
                     <span>{resultInfo.leak}</span>
                   </li>
@@ -414,6 +417,47 @@ export const ResultPage: React.FC<{
 
       {/* QR Code Modal */}
       <AnimatePresence>
+        {isShareModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsShareModalOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.92, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.92, opacity: 0, y: 20 }}
+              className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 max-w-sm w-full shadow-2xl relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setIsShareModalOpen(false)}
+                className="absolute top-4 right-4 text-zinc-400 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <textarea
+                readOnly
+                value={shareText}
+                className="w-full h-32 rounded-xl bg-zinc-950 border border-zinc-800 p-3 text-sm text-zinc-200 leading-relaxed resize-none outline-none"
+              />
+
+              <button
+                onClick={handleCopyShareText}
+                className="mt-4 w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm transition-colors"
+              >
+                一键复制
+              </button>
+
+              {copyStatus === 'done' && (
+                <p className="mt-3 text-center text-sm text-emerald-400 font-medium">已复制</p>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
         {isQrModalOpen && (
           <motion.div
             initial={{ opacity: 0 }}
