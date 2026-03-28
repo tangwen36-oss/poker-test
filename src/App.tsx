@@ -80,7 +80,7 @@ const HomePage: React.FC<{ onStart: () => void, hasLastResult?: boolean, onResto
         onClick={onStart}
         className="w-full bg-zinc-900 text-white font-bold text-lg py-4 rounded-full shadow-2xl active:scale-95 transition-transform border border-zinc-700/50 tracking-widest"
       >
-        进入牌桌
+        开始测试
       </button>
 
       {hasLastResult && onRestore && (

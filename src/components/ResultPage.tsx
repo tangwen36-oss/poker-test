@@ -328,10 +328,10 @@ https://poker.life-algo.xyz/`;
         </div>
         <button
           onClick={handleShare}
-          className="w-full p-3.5 rounded-xl bg-black hover:bg-zinc-900 border border-white/10 active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 z-10 shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
+          className="w-full p-3.5 rounded-xl bg-gradient-to-br from-[#3f1768] via-[#2a0f4a] to-[#13091d] hover:from-[#4a1d79] hover:via-[#311356] hover:to-[#180c24] border border-purple-300/20 active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 z-10 shadow-[0_16px_34px_rgba(0,0,0,0.35),0_0_22px_rgba(168,85,247,0.22)]"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-          <Share2 className="w-4 h-4 text-white relative z-10" />
+          <Share2 className="w-4 h-4 text-purple-100 relative z-10" />
           <span className="relative z-10 text-sm text-white font-bold leading-relaxed block">
             分享给牌友
           </span>
@@ -339,7 +339,7 @@ https://poker.life-algo.xyz/`;
       </div>
 
       {/* 付费区 */}
-      <div className="m-4 mt-10 bg-gradient-to-br from-[#3f1768] via-[#2a0f4a] to-[#120919] backdrop-blur-xl rounded-[24px] p-5 pt-10 relative shadow-[0_18px_50px_rgba(0,0,0,0.75),0_0_28px_rgba(168,85,247,0.32)] border border-purple-400/25 shrink-0 z-20 overflow-hidden">
+      <div className="m-4 mt-10 bg-gradient-to-br from-[#3f1768] via-[#2a0f4a] to-[#120919] backdrop-blur-xl rounded-[24px] p-5 pt-10 relative shadow-[0_18px_50px_rgba(0,0,0,0.75),0_0_28px_rgba(168,85,247,0.32)] border border-purple-400/25 shrink-0 z-20 overflow-visible">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(216,180,254,0.22),transparent_48%)] pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-black rounded-full flex items-center justify-center border-2 border-purple-300/30 shadow-[0_8px_18px_rgba(0,0,0,0.45)]">
           <Lock className="w-6 h-6 text-purple-300" />
@@ -381,7 +381,7 @@ https://poker.life-algo.xyz/`;
             {!hasPaid && !isUnlocking && (
               <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
             )}
-            <span className="relative z-10 text-sm font-black tracking-wider flex items-center gap-2">
+            <span className="relative z-10 text-lg font-black tracking-wide flex items-center gap-2">
               {isUnlocking ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
