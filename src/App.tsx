@@ -230,8 +230,22 @@ const TestPage = ({ question, currentIndex, total, onAnswer, onBack }: any) => {
 
 export default function App() {
   const isMockPaidMode =
-    typeof window !== 'undefined' &&
-    new URLSearchParams(window.location.search).get('mockPaid') === '1';
+    typeof window !== 'undefined' && (() => {
+      const params = new URLSearchParams(window.location.search);
+      const mockPaidParam = params.get('mockPaid');
+
+      if (mockPaidParam === '1') {
+        localStorage.setItem('mockPaidPreview', 'true');
+        return true;
+      }
+
+      if (mockPaidParam === '0') {
+        localStorage.removeItem('mockPaidPreview');
+        return false;
+      }
+
+      return localStorage.getItem('mockPaidPreview') === 'true';
+    })();
   const [screen, setScreen] = useState<'home' | 'test' | 'result' | 'premium'>(
     isMockPaidMode ? 'premium' : 'home'
   );
@@ -302,7 +316,15 @@ export default function App() {
     const outTradeNo = urlParams.get('out_trade_no');
     const mockPaid = urlParams.get('mockPaid');
 
-    if (mockPaid === '1') {
+    if (mockPaid === '0') {
+      localStorage.removeItem('mockPaidPreview');
+      localStorage.removeItem('hasPaid');
+      setHasPaid(false);
+      return;
+    }
+
+    if (mockPaid === '1' || localStorage.getItem('mockPaidPreview') === 'true') {
+      localStorage.setItem('mockPaidPreview', 'true');
       const previewAnswers = storedAnswers ? JSON.parse(storedAnswers) : mockPreviewAnswers;
       setHasPaid(true);
       setLastResultType(storedLastResultType || 'TAG');
