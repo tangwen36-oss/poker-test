@@ -246,6 +246,7 @@ export default function App() {
 
       return localStorage.getItem('mockPaidPreview') === 'true';
     })();
+  const shouldForcePremiumPreview = isMockPaidMode;
   const [screen, setScreen] = useState<'home' | 'test' | 'result' | 'premium'>(
     isMockPaidMode ? 'premium' : 'home'
   );
@@ -448,7 +449,7 @@ export default function App() {
               onResultReady={handleResultReady}
             />
           )}
-          {screen === 'premium' && (
+          {(screen === 'premium' || shouldForcePremiumPreview) && (
             <PremiumStrategy
               key="premium"
               answers={answers}
