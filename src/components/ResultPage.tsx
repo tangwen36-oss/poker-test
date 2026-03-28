@@ -328,11 +328,10 @@ https://poker.life-algo.xyz/`;
         </div>
         <button
           onClick={handleShare}
-          className="w-full p-3.5 rounded-xl bg-gradient-to-br from-[#3f1768] via-[#2a0f4a] to-[#13091d] hover:from-[#4a1d79] hover:via-[#311356] hover:to-[#180c24] border border-purple-300/20 active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 z-10 shadow-[0_16px_34px_rgba(0,0,0,0.35),0_0_22px_rgba(168,85,247,0.22)]"
+          className="w-full p-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/10 active:scale-[0.98] transition-all relative flex items-center justify-center gap-2 z-10 shadow-[0_12px_26px_rgba(0,0,0,0.26)]"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-          <Share2 className="w-4 h-4 text-purple-100 relative z-10" />
-          <span className="relative z-10 text-sm text-white font-bold leading-relaxed block">
+          <Share2 className="w-4 h-4 text-zinc-200" />
+          <span className="text-sm text-white font-bold leading-relaxed block">
             分享给牌友
           </span>
         </button>
@@ -375,7 +374,7 @@ https://poker.life-algo.xyz/`;
             className={`w-full py-3.5 rounded-xl border active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 shadow-[0_12px_28px_rgba(0,0,0,0.3)] disabled:opacity-80 disabled:cursor-not-allowed disabled:active:scale-100 ${
               hasPaid 
                 ? 'bg-zinc-800 border-zinc-600 text-zinc-400' 
-                : 'bg-black hover:bg-zinc-900 border-white/10 text-white'
+                : 'bg-gradient-to-r from-[#0b0b12] via-[#35145b] to-[#7c2cff] hover:from-[#151520] hover:via-[#4a1d79] hover:to-[#9f4dff] border-purple-300/35 text-white shadow-[0_0_28px_rgba(139,92,246,0.45),0_14px_30px_rgba(0,0,0,0.35)]'
             }`}
           >
             {!hasPaid && !isUnlocking && (
