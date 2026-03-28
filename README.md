@@ -35,3 +35,5 @@ Vite + React + Tailwind 的德州扑克测试 H5，前端静态页面由 Vercel 
 ## 数据库
 
 Supabase 初始化 SQL 在 `supabase/migration.sql`。
+
+GitHub 自动部署验证已启用，后续 push 到 `main` 会触发 Vercel 部署。
