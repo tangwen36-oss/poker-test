@@ -5,6 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google" content="notranslate" />
     <title>德州牌桌玩家画像</title>
+    <script>
+      (function () {
+        function lockWeChatFontScale() {
+          if (!window.WeixinJSBridge || typeof window.WeixinJSBridge.invoke !== 'function') {
+            return;
+          }
+
+          window.WeixinJSBridge.invoke('setFontSizeCallback', { fontSize: 0 });
+          window.WeixinJSBridge.on('menu:setfont', function () {
+            window.WeixinJSBridge.invoke('setFontSizeCallback', { fontSize: 0 });
+          });
+        }
+
+        if (/MicroMessenger/i.test(navigator.userAgent)) {
+          if (window.WeixinJSBridge) {
+            lockWeChatFontScale();
+          } else {
+            document.addEventListener('WeixinJSBridgeReady', lockWeChatFontScale, false);
+          }
+        }
+      })();
+    </script>
   </head>
   <body class="notranslate" translate="no">
     <div id="root"></div>
