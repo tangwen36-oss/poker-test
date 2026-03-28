@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Lock, Check, RotateCcw, Swords, Bomb, Rocket, X } from 'lucide-react';
+import { Lock, Check, RotateCcw, Swords, Bomb, Rocket, X, Share2 } from 'lucide-react';
 import { getFinalResult } from '../lib/scoring';
 import { questions } from '../data/questions';
 import { resultsData } from '../data/results';
@@ -96,6 +96,23 @@ export const ResultPage: React.FC<{
       setIsUnlocking(false);
       setUnlockError('网络异常，请重试');
       setTimeout(() => setUnlockError(''), 4000);
+    }
+  };
+
+  const handleShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: '我的德州扑克玩家画像',
+          text: `我是【${resultInfo.name}】！快来测测你的德州扑克玩家画像，解锁专属盈利策略！`,
+          url: window.location.href,
+        });
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        alert('链接已复制，快去分享给牌友吧！');
+      }
+    } catch (err) {
+      console.error('Error sharing:', err);
     }
   };
 
@@ -300,6 +317,22 @@ export const ResultPage: React.FC<{
             </p>
           </div>
         </div>
+      </div>
+
+      <div className="px-5 pb-4 pt-2 bg-zinc-950 shrink-0 z-10 relative">
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-24 bg-purple-600/10 blur-2xl" />
+        </div>
+        <button
+          onClick={handleShare}
+          className="w-full p-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 border-t-[1px] border-purple-400/30 active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 z-10 shadow-[0_0_20px_rgba(147,51,234,0.3)]"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+          <Share2 className="w-4 h-4 text-white relative z-10" />
+          <span className="relative z-10 text-sm text-white font-bold leading-relaxed block">
+            分享给牌友
+          </span>
+        </button>
       </div>
 
       {/* 付费区 */}
