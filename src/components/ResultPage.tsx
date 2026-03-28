@@ -338,18 +338,18 @@ https://poker.life-algo.xyz/`;
       </div>
 
       {/* 付费区 */}
-      <div className="m-4 mt-10 bg-gradient-to-br from-[#3f1768] via-[#2a0f4a] to-[#120919] backdrop-blur-xl rounded-[24px] p-5 pt-10 relative shadow-[0_18px_50px_rgba(0,0,0,0.75),0_0_28px_rgba(168,85,247,0.32)] border border-purple-400/25 shrink-0 z-20 overflow-visible">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(216,180,254,0.22),transparent_48%)] pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-black rounded-full flex items-center justify-center border-2 border-purple-300/30 shadow-[0_8px_18px_rgba(0,0,0,0.45)]">
-          <Lock className="w-6 h-6 text-purple-300" />
+      <div className="m-4 mt-10 bg-[linear-gradient(145deg,#120f08_0%,#251a08_34%,#49300d_62%,#140f08_100%)] backdrop-blur-xl rounded-[24px] p-5 pt-10 relative shadow-[0_20px_55px_rgba(0,0,0,0.78),0_0_32px_rgba(245,158,11,0.22)] border border-amber-300/25 shrink-0 z-20 overflow-visible">
+        <div className="absolute inset-0 rounded-[24px] bg-[radial-gradient(circle_at_top,rgba(252,211,77,0.3),transparent_42%),linear-gradient(120deg,transparent_0%,rgba(255,244,214,0.08)_22%,transparent_42%,rgba(251,191,36,0.08)_64%,transparent_82%)] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-black rounded-full flex items-center justify-center border-2 border-amber-300/35 shadow-[0_10px_22px_rgba(0,0,0,0.5),0_0_18px_rgba(245,158,11,0.22)]">
+          <Lock className="w-6 h-6 text-amber-300" />
         </div>
         
         <h3 className="relative text-lg font-black text-white text-center mb-4 tracking-wide">
           解锁你的最优打法策略
         </h3>
         
-        <div className="relative bg-black/20 rounded-xl p-4 mb-5 border border-white/10">
-          <p className="text-xs text-purple-100/70 mb-3 font-bold tracking-widest uppercase text-center">解锁后你将获得：</p>
+        <div className="relative bg-black/25 rounded-xl p-4 mb-5 border border-amber-200/12 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+          <p className="text-xs text-amber-100/75 mb-3 font-bold tracking-widest uppercase text-center">解锁后你将获得：</p>
           <div className="flex justify-center">
             <ul className="space-y-3 inline-block text-left">
               {[
@@ -358,8 +358,8 @@ https://poker.life-algo.xyz/`;
                 "你应保留及重点修正的打法习惯",
                 "一套适合你的稳定正收益打法模型"
               ].map((item, idx) => (
-                <li key={idx} className="flex items-start gap-2.5 text-sm text-purple-50/92 font-medium leading-relaxed">
-                  <Check className="w-4 h-4 text-purple-200 shrink-0 mt-0.5" />
+                <li key={idx} className="flex items-start gap-2.5 text-sm text-amber-50/92 font-medium leading-relaxed">
+                  <Check className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -374,7 +374,7 @@ https://poker.life-algo.xyz/`;
             className={`w-full py-3.5 rounded-xl border active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 shadow-[0_12px_28px_rgba(0,0,0,0.3)] disabled:opacity-80 disabled:cursor-not-allowed disabled:active:scale-100 ${
               hasPaid 
                 ? 'bg-zinc-800 border-zinc-600 text-zinc-400' 
-                : 'bg-gradient-to-r from-[#0b0b12] via-[#35145b] to-[#7c2cff] hover:from-[#151520] hover:via-[#4a1d79] hover:to-[#9f4dff] border-purple-300/35 text-white shadow-[0_0_28px_rgba(139,92,246,0.45),0_14px_30px_rgba(0,0,0,0.35)]'
+                : 'bg-[linear-gradient(135deg,#120d06_0%,#7c5312_35%,#f2b63d_68%,#fff0bf_100%)] hover:brightness-110 border-amber-200/40 text-black shadow-[0_0_30px_rgba(251,191,36,0.38),0_14px_30px_rgba(0,0,0,0.35)]'
             }`}
           >
             {!hasPaid && !isUnlocking && (
