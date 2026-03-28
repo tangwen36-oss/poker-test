@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Lock, Check, Download, RotateCcw, Swords, Bomb, Rocket, X, Share2 } from 'lucide-react';
-import { toBlob, toPng } from 'html-to-image';
+import { toPng } from 'html-to-image';
 import { getFinalResult } from '../lib/scoring';
 import { questions } from '../data/questions';
 import { resultsData } from '../data/results';
@@ -33,6 +33,7 @@ export const ResultPage: React.FC<{
   const [unlockError, setUnlockError] = useState('');
   const [saveImageStatus, setSaveImageStatus] = useState<'idle' | 'generating' | 'success' | 'error'>('idle');
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
+  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
 
   const match = resultInfo.name.match(/(.+?)（(.+?)）/);
   const prefix = match ? match[1] : resultInfo.name;
@@ -60,34 +61,14 @@ export const ResultPage: React.FC<{
     }
     
     try {
-      const exportOptions = {
+      const dataUrl = await toPng(element, {
         cacheBust: true,
         pixelRatio: 2,
         backgroundColor: '#1e103c',
         skipFonts: true,
-      };
+      });
 
-      const blob = await toBlob(element, exportOptions);
-      if (!blob) {
-        throw new Error('Failed to generate image blob');
-      }
-
-      const file = new File([blob], '我的德州画像.png', { type: 'image/png' });
-      const nav = navigator as Navigator & { canShare?: (data?: ShareData) => boolean };
-
-      if (nav.canShare?.({ files: [file] })) {
-        await navigator.share({
-          files: [file],
-          title: '我的德州画像',
-          text: '保存这张德州牌桌玩家画像',
-        });
-      } else {
-        const dataUrl = await toPng(element, exportOptions);
-        const link = document.createElement('a');
-        link.download = '我的德州画像.png';
-        link.href = dataUrl;
-        link.click();
-      }
+      setPreviewImageUrl(dataUrl);
       
       setSaveImageStatus('success');
       setTimeout(() => setSaveImageStatus('idle'), 3000);
@@ -243,7 +224,7 @@ export const ResultPage: React.FC<{
                 <span>{prefix}</span>
               </div>
               <h1 
-                className="result-title-stroke text-[4.5rem] leading-none font-black text-transparent bg-clip-text bg-gradient-to-br from-white via-cyan-100 to-cyan-500 tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] italic transform -rotate-2 pr-4 pt-2 pb-2"
+                className="text-[4.5rem] leading-none font-black text-cyan-50 tracking-tighter [text-shadow:0_4px_16px_rgba(0,0,0,0.8)] italic transform -rotate-2 pr-4 pt-2 pb-2"
               >
                 {mainName}
               </h1>
@@ -385,7 +366,7 @@ export const ResultPage: React.FC<{
           <Download className={`w-4 h-4 text-zinc-200 relative z-10 ${saveImageStatus === 'generating' ? 'animate-bounce' : ''}`} />
           <span className="relative z-10 text-sm text-zinc-200 font-bold leading-relaxed block">
             {saveImageStatus === 'generating' ? '生成中...' : 
-             saveImageStatus === 'success' ? '已生成图片' : 
+             saveImageStatus === 'success' ? '长按图片保存' : 
              saveImageStatus === 'error' ? '生成失败' : 
              '保存图片'}
           </span>
@@ -481,6 +462,41 @@ export const ResultPage: React.FC<{
 
       {/* QR Code Modal */}
       <AnimatePresence>
+        {previewImageUrl && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm"
+            onClick={() => setPreviewImageUrl(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.92, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.92, opacity: 0, y: 20 }}
+              className="bg-zinc-950 border border-zinc-800 rounded-3xl p-4 max-w-sm w-full shadow-2xl relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setPreviewImageUrl(null)}
+                className="absolute top-3 right-3 text-zinc-400 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <h3 className="text-base font-bold text-white text-center mb-2">长按图片保存到相册</h3>
+              <p className="text-xs text-zinc-400 text-center mb-4">
+                手机端请长按下方图片，选择“保存到相册”或“存储图片”
+              </p>
+
+              <img
+                src={previewImageUrl}
+                alt="德州牌桌玩家画像预览"
+                className="w-full rounded-2xl border border-zinc-800 shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
+              />
+            </motion.div>
+          </motion.div>
+        )}
         {isQrModalOpen && (
           <motion.div
             initial={{ opacity: 0 }}

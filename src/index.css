@@ -1,14 +1,1 @@
 @import "tailwindcss";
-
-.result-title-stroke {
-  -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.4);
-}
-
-@media (max-width: 640px) {
-  .result-title-stroke {
-    -webkit-text-stroke: 0;
-    text-shadow:
-      0 2px 6px rgba(0, 0, 0, 0.7),
-      0 0 1px rgba(0, 0, 0, 0.8);
-  }
-}
