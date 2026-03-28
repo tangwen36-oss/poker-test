@@ -348,7 +348,7 @@ https://poker.life-algo.xyz/`;
           解锁你的最优打法策略
         </h3>
         
-        <div className="relative bg-black/25 rounded-xl p-4 mb-5 border border-amber-200/12 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+        <div className="relative bg-black rounded-xl p-4 mb-5 border border-amber-200/12 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
           <p className="text-xs text-amber-100/75 mb-3 font-bold tracking-widest uppercase text-center">解锁后你将获得：</p>
           <div className="flex justify-center">
             <ul className="space-y-3 inline-block text-left">
@@ -374,7 +374,7 @@ https://poker.life-algo.xyz/`;
             className={`w-full py-3.5 rounded-xl border active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 shadow-[0_12px_28px_rgba(0,0,0,0.3)] disabled:opacity-80 disabled:cursor-not-allowed disabled:active:scale-100 ${
               hasPaid 
                 ? 'bg-zinc-800 border-zinc-600 text-zinc-400' 
-                : 'bg-[linear-gradient(135deg,#120d06_0%,#7c5312_35%,#f2b63d_68%,#fff0bf_100%)] hover:brightness-110 border-amber-200/40 text-black shadow-[0_0_30px_rgba(251,191,36,0.38),0_14px_30px_rgba(0,0,0,0.35)]'
+                : 'bg-[linear-gradient(135deg,#6d460a_0%,#c98b1d_32%,#f3c65a_62%,#fff0bf_100%)] hover:brightness-110 border-amber-100/45 text-black shadow-[0_0_30px_rgba(251,191,36,0.38),0_14px_30px_rgba(0,0,0,0.35)]'
             }`}
           >
             {!hasPaid && !isUnlocking && (
