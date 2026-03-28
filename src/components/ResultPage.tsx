@@ -299,19 +299,19 @@ https://poker.life-algo.xyz/`;
               {/* Steps */}
               <div className="relative z-10 flex flex-col items-center gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-purple-400 shadow-[0_0_10px_rgba(192,132,252,0.8)] ring-2 ring-purple-900" />
-                <span className="text-[11px] font-bold text-purple-300">{evolution[0]}</span>
+                <span className="text-xs font-bold text-purple-300">{evolution[0]}</span>
               </div>
               <div className="relative z-10 flex flex-col items-center gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-zinc-700 ring-2 ring-zinc-900" />
-                <span className="text-[11px] font-medium text-zinc-500">{evolution[1]}</span>
+                <span className="text-xs font-medium text-zinc-500">{evolution[1]}</span>
               </div>
               <div className="relative z-10 flex flex-col items-center gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-zinc-700 ring-2 ring-zinc-900" />
-                <span className="text-[11px] font-medium text-zinc-500">{evolution[2]}</span>
+                <span className="text-xs font-medium text-zinc-500">{evolution[2]}</span>
               </div>
             </div>
 
-            <p className="text-xs text-center text-zinc-400 font-medium leading-relaxed mt-3">
+            <p className="text-sm text-center text-zinc-400 font-medium leading-relaxed mt-3">
               {resultInfo.evolutionComment ? (
                 resultInfo.evolutionComment
               ) : (
@@ -349,7 +349,7 @@ https://poker.life-algo.xyz/`;
         </h3>
         
         <div className="bg-black/30 rounded-xl p-4 mb-5 border border-white/5">
-          <p className="text-[11px] text-zinc-500 mb-3 font-bold tracking-widest uppercase text-center">解锁后你将获得：</p>
+          <p className="text-xs text-zinc-500 mb-3 font-bold tracking-widest uppercase text-center">解锁后你将获得：</p>
           <div className="flex justify-center">
             <ul className="space-y-3 inline-block text-left">
               {[
@@ -358,7 +358,7 @@ https://poker.life-algo.xyz/`;
                 "你应保留及重点修正的打法习惯",
                 "一套适合你的稳定正收益打法模型"
               ].map((item, idx) => (
-                <li key={idx} className="flex items-start gap-2.5 text-xs text-zinc-300 font-medium leading-relaxed">
+                <li key={idx} className="flex items-start gap-2.5 text-sm text-zinc-300 font-medium leading-relaxed">
                   <Check className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />
                   <span>{item}</span>
                 </li>
@@ -372,7 +372,7 @@ https://poker.life-algo.xyz/`;
             onClick={() => setIsQrModalOpen(true)}
             className="flex-1 py-3.5 rounded-xl bg-zinc-800/80 hover:bg-zinc-700 border border-zinc-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-inner"
           >
-            <span className="text-sm text-zinc-300 font-bold tracking-wide">玩家交流</span>
+            <span className="text-sm text-zinc-300 font-bold tracking-wide">策略交流</span>
           </button>
           <button 
             onClick={handleUnlock}
@@ -402,14 +402,14 @@ https://poker.life-algo.xyz/`;
         </div>
 
         {unlockError && (
-          <p className="text-center text-rose-400 text-xs font-medium mb-3 animate-pulse">
+          <p className="text-center text-rose-400 text-sm font-medium mb-3 animate-pulse">
             {unlockError}
           </p>
         )}
 
         <button
           onClick={onRestart}
-          className="w-full py-3 text-xs text-zinc-500 font-bold flex items-center justify-center gap-2 active:text-zinc-300 transition-colors hover:bg-white/5 rounded-xl"
+          className="w-full py-3 text-sm text-zinc-500 font-bold flex items-center justify-center gap-2 active:text-zinc-300 transition-colors hover:bg-white/5 rounded-xl"
         >
           <RotateCcw className="w-4 h-4" /> 重新测试
         </button>
