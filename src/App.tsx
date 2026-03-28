@@ -238,6 +238,7 @@ export default function App() {
   const [hasPaid, setHasPaid] = useState<boolean>(false);
   const [lastResultType, setLastResultType] = useState<string | null>(null);
   const hasRestorableResult = answers.length > 0;
+  const mockPreviewAnswers = questions.map((question) => question.options[0].scores);
 
   // Initialize local state + backend sync
   useEffect(() => {
@@ -294,6 +295,20 @@ export default function App() {
     // 4. Check if returning from payment (URL contains out_trade_no)
     const urlParams = new URLSearchParams(window.location.search);
     const outTradeNo = urlParams.get('out_trade_no');
+    const mockPaid = urlParams.get('mockPaid');
+
+    if (mockPaid === '1') {
+      const previewAnswers = storedAnswers ? JSON.parse(storedAnswers) : mockPreviewAnswers;
+      setHasPaid(true);
+      setAnswers(previewAnswers);
+      localStorage.setItem('hasPaid', 'true');
+      if (!storedAnswers) {
+        localStorage.setItem('lastAnswers', JSON.stringify(previewAnswers));
+      }
+      setScreen('premium');
+      return;
+    }
+
     if (outTradeNo) {
       // Clean URL
       window.history.replaceState({}, '', window.location.pathname);
@@ -377,7 +392,7 @@ export default function App() {
             <HomePage 
               key="home" 
               onStart={handleStart} 
-      hasLastResult={hasRestorableResult}
+              hasLastResult={hasRestorableResult}
               onRestore={handleRestoreResult}
             />
           )}

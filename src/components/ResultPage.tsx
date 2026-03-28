@@ -43,7 +43,7 @@ export const ResultPage: React.FC<{
     <>
       {resultInfo.comment}
       <br />
-      <span className="text-rose-300/90 text-[11px] mt-1 inline-block">⚠️ 易受情绪影响，注意防范上头</span>
+      <span className="text-rose-300/90 text-xs mt-1 inline-block">⚠️ 易受情绪影响，注意防范上头</span>
     </>
   ) : (
     resultInfo.comment
@@ -219,8 +219,8 @@ export const ResultPage: React.FC<{
               {/* Dark glow behind text to ensure readability over the image */}
               <div className="absolute top-1/2 left-0 w-[140%] h-[140%] -translate-y-1/2 bg-black/40 blur-2xl rounded-full z-[-1] pointer-events-none" />
               
-              <div className="inline-flex items-center gap-1.5 bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 px-3 py-1 rounded-full font-bold text-[11px] tracking-widest mb-1 backdrop-blur-md shadow-[0_0_10px_rgba(34,211,238,0.3)] transform -rotate-3">
-                <span className="text-[10px]">♠️</span>
+              <div className="inline-flex items-center gap-1.5 bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 px-3 py-1 rounded-full font-bold text-xs tracking-widest mb-1 backdrop-blur-md shadow-[0_0_10px_rgba(34,211,238,0.3)] transform -rotate-3">
+                <span className="text-[11px]">♠️</span>
                 <span>{prefix}</span>
               </div>
               <h1 
@@ -255,7 +255,7 @@ export const ResultPage: React.FC<{
             <div className="space-y-3">
               {indices.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3">
-                  <span className="text-[11px] text-zinc-300 font-medium w-14 text-right">{item.label}</span>
+                  <span className="text-xs text-zinc-300 font-medium w-14 text-right">{item.label}</span>
                   <div className="flex-1 h-2 bg-black/60 rounded-full overflow-hidden border border-white/5 relative">
                     <motion.div
                       initial={{ width: 0 }}
@@ -264,7 +264,7 @@ export const ResultPage: React.FC<{
                       className={`absolute top-0 left-0 h-full bg-gradient-to-r ${item.color} rounded-full ${item.shadow}`}
                     />
                   </div>
-                  <span className="text-[11px] text-white font-bold w-6 text-right">{item.value}</span>
+                  <span className="text-xs text-white font-bold w-6 text-right">{item.value}</span>
                 </div>
               ))}
             </div>
@@ -277,11 +277,11 @@ export const ResultPage: React.FC<{
               <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
               <div className="flex items-center gap-2 mb-2.5">
                 <Swords className="w-4 h-4 text-cyan-400" />
-                <h3 className="text-[11px] font-bold text-cyan-100 tracking-widest">典型打法</h3>
+                <h3 className="text-xs font-bold text-cyan-100 tracking-widest">典型打法</h3>
               </div>
               <ul className="space-y-2 mt-auto relative z-10">
                 {resultInfo.traits.map((item: string, idx: number) => (
-                  <li key={idx} className="flex items-start gap-1.5 text-[11px] text-zinc-300 font-medium leading-tight">
+                  <li key={idx} className="flex items-start gap-1.5 text-xs text-zinc-300 font-medium leading-tight">
                     <div className="w-1 h-1 rounded-full bg-cyan-400 shadow-[0_0_5px_rgba(34,211,238,0.8)] shrink-0 mt-1" />
                     <span>{item}</span>
                   </li>
@@ -294,16 +294,16 @@ export const ResultPage: React.FC<{
               <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-rose-400/30 to-transparent" />
               <div className="flex items-center gap-2 mb-2.5">
                 <Bomb className="w-4 h-4 text-rose-400" />
-                <h3 className="text-[11px] font-bold text-rose-100 tracking-widest">核心问题</h3>
+                <h3 className="text-xs font-bold text-rose-100 tracking-widest">核心问题</h3>
               </div>
               <ul className="space-y-2 mt-auto relative z-10">
                 {Array.isArray(resultInfo.leak) ? resultInfo.leak.map((item: string, idx: number) => (
-                  <li key={idx} className="flex items-start gap-1.5 text-[11px] text-zinc-300 font-medium leading-tight">
+                  <li key={idx} className="flex items-start gap-1.5 text-xs text-zinc-300 font-medium leading-tight">
                     <div className="w-1 h-1 rounded-full bg-rose-400 shadow-[0_0_5px_rgba(251,113,133,0.8)] shrink-0 mt-1" />
                     <span>{item}</span>
                   </li>
                 )) : (
-                  <li className="flex items-start gap-1.5 text-[11px] text-zinc-300 font-medium leading-tight">
+                  <li className="flex items-start gap-1.5 text-xs text-zinc-300 font-medium leading-tight">
                     <div className="w-1 h-1 rounded-full bg-rose-400 shadow-[0_0_5px_rgba(251,113,133,0.8)] shrink-0 mt-1" />
                     <span>{resultInfo.leak}</span>
                   </li>
@@ -317,7 +317,7 @@ export const ResultPage: React.FC<{
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-400/30 to-transparent" />
             <div className="flex items-center gap-2 mb-3">
               <Rocket className="w-4 h-4 text-purple-400" />
-              <h3 className="text-[11px] font-bold text-purple-100 tracking-widest">进化路径</h3>
+              <h3 className="text-xs font-bold text-purple-100 tracking-widest">进化路径</h3>
             </div>
             
             <div className="relative flex items-center justify-between px-4 mb-2">
@@ -329,19 +329,19 @@ export const ResultPage: React.FC<{
               {/* Steps */}
               <div className="relative z-10 flex flex-col items-center gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-purple-400 shadow-[0_0_10px_rgba(192,132,252,0.8)] ring-2 ring-purple-900" />
-                <span className="text-[10px] font-bold text-purple-300">{evolution[0]}</span>
+                <span className="text-[11px] font-bold text-purple-300">{evolution[0]}</span>
               </div>
               <div className="relative z-10 flex flex-col items-center gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-zinc-700 ring-2 ring-zinc-900" />
-                <span className="text-[10px] font-medium text-zinc-500">{evolution[1]}</span>
+                <span className="text-[11px] font-medium text-zinc-500">{evolution[1]}</span>
               </div>
               <div className="relative z-10 flex flex-col items-center gap-1.5">
                 <div className="w-3 h-3 rounded-full bg-zinc-700 ring-2 ring-zinc-900" />
-                <span className="text-[10px] font-medium text-zinc-500">{evolution[2]}</span>
+                <span className="text-[11px] font-medium text-zinc-500">{evolution[2]}</span>
               </div>
             </div>
 
-            <p className="text-[11px] text-center text-zinc-400 font-medium leading-relaxed mt-3">
+            <p className="text-xs text-center text-zinc-400 font-medium leading-relaxed mt-3">
               {resultInfo.evolutionComment ? (
                 resultInfo.evolutionComment
               ) : (
@@ -394,7 +394,7 @@ export const ResultPage: React.FC<{
         </h3>
         
         <div className="bg-black/30 rounded-xl p-4 mb-5 border border-white/5">
-          <p className="text-[10px] text-zinc-500 mb-3 font-bold tracking-widest uppercase text-center">解锁后你将获得：</p>
+          <p className="text-[11px] text-zinc-500 mb-3 font-bold tracking-widest uppercase text-center">解锁后你将获得：</p>
           <div className="flex justify-center">
             <ul className="space-y-3 inline-block text-left">
               {[
@@ -417,7 +417,7 @@ export const ResultPage: React.FC<{
             onClick={() => setIsQrModalOpen(true)}
             className="flex-1 py-3.5 rounded-xl bg-zinc-800/80 hover:bg-zinc-700 border border-zinc-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-inner"
           >
-            <span className="text-sm text-zinc-300 font-bold tracking-wide">咨询/玩家交流</span>
+            <span className="text-sm text-zinc-300 font-bold tracking-wide">玩家交流</span>
           </button>
           <button 
             onClick={handleUnlock}
@@ -484,10 +484,7 @@ export const ResultPage: React.FC<{
                 <X className="w-5 h-5" />
               </button>
 
-              <h3 className="text-base font-bold text-white text-center mb-2">长按图片保存到相册</h3>
-              <p className="text-xs text-zinc-400 text-center mb-4">
-                手机端请长按下方图片，选择“保存到相册”或“存储图片”
-              </p>
+              <h3 className="text-base font-bold text-white text-center mb-4">长按图片保存到相册</h3>
 
               <img
                 src={previewImageUrl}
@@ -519,19 +516,14 @@ export const ResultPage: React.FC<{
                 <X className="w-5 h-5" />
               </button>
               
-              <h3 className="text-lg font-bold text-white mb-2 text-center">加入学习交流群</h3>
-              <p className="text-sm text-zinc-400 text-center mb-6">
-                扫码添加小助手，获取更多进阶策略与实战复盘
-              </p>
-              
               <div className="w-48 h-48 mx-auto bg-zinc-800 rounded-xl border border-zinc-700 flex items-center justify-center mb-4 overflow-hidden relative">
                 {/* Placeholder for QR Code */}
                 <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, #a855f7 10px, #a855f7 20px)' }} />
                 <span className="text-zinc-500 font-medium relative z-10 text-sm">二维码占位区</span>
               </div>
               
-              <p className="text-xs text-zinc-500 text-center">
-                长按保存二维码图片
+              <p className="text-sm text-zinc-400 text-center">
+                长按可保存图片
               </p>
             </motion.div>
           </motion.div>
