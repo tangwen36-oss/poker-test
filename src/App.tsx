@@ -237,6 +237,7 @@ export default function App() {
   const [userId, setUserId] = useState<string>('');
   const [hasPaid, setHasPaid] = useState<boolean>(false);
   const [lastResultType, setLastResultType] = useState<string | null>(null);
+  const hasRestorableResult = answers.length > 0;
 
   // Initialize local state + backend sync
   useEffect(() => {
@@ -376,7 +377,7 @@ export default function App() {
             <HomePage 
               key="home" 
               onStart={handleStart} 
-              hasLastResult={!!lastResultType || answers.length > 0}
+      hasLastResult={hasRestorableResult}
               onRestore={handleRestoreResult}
             />
           )}
@@ -414,4 +415,3 @@ export default function App() {
     </div>
   );
 }
-

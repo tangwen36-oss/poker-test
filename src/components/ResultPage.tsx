@@ -7,6 +7,31 @@ import { questions } from '../data/questions';
 import { resultsData } from '../data/results';
 import { createPayment, isWechatBrowser } from '../lib/api';
 
+function applyExportSafeStyles(source: HTMLElement, target: HTMLElement) {
+  const computed = window.getComputedStyle(source);
+  const sourceClassName = typeof source.className === 'string' ? source.className : '';
+
+  target.style.backgroundImage = 'none';
+  target.style.backgroundColor = computed.backgroundColor;
+  target.style.boxShadow = computed.boxShadow;
+  target.style.borderColor = computed.borderColor;
+  target.style.textShadow = computed.textShadow;
+
+  if (computed.color && computed.color !== 'rgba(0, 0, 0, 0)' && computed.color !== 'transparent') {
+    target.style.color = computed.color;
+  }
+
+  if (sourceClassName.includes('text-transparent')) {
+    target.style.backgroundClip = 'border-box';
+    target.style.webkitBackgroundClip = 'border-box';
+    target.style.color = '#ffffff';
+  }
+
+  if (sourceClassName.includes('bg-gradient') && (!computed.backgroundColor || computed.backgroundColor === 'rgba(0, 0, 0, 0)')) {
+    target.style.backgroundColor = '#6d28d9';
+  }
+}
+
 export const ResultPage: React.FC<{ 
   answers: Record<string, number>[], 
   hasPaid: boolean,
@@ -60,11 +85,24 @@ export const ResultPage: React.FC<{
     }
     
     try {
+      const exportNodes = [element, ...Array.from(element.querySelectorAll<HTMLElement>('*'))];
+      exportNodes.forEach((node, index) => {
+        node.setAttribute('data-export-node-id', String(index));
+      });
+
       const canvas = await html2canvas(element, {
         scale: 2, // slightly lower scale for better performance/stability
         useCORS: true,
         backgroundColor: '#1e103c', // Match the deep purple background
         logging: false,
+        onclone: (clonedDoc) => {
+          exportNodes.forEach((sourceNode, index) => {
+            const targetNode = clonedDoc.querySelector<HTMLElement>(`[data-export-node-id="${index}"]`);
+            if (targetNode) {
+              applyExportSafeStyles(sourceNode, targetNode);
+            }
+          });
+        },
       });
       
       const dataUrl = canvas.toDataURL('image/png');
@@ -79,6 +117,10 @@ export const ResultPage: React.FC<{
       console.error('Failed to save image', err);
       setSaveImageStatus('error');
       setTimeout(() => setSaveImageStatus('idle'), 3000);
+    } finally {
+      [element, ...Array.from(element.querySelectorAll<HTMLElement>('*'))].forEach((node) => {
+        node.removeAttribute('data-export-node-id');
+      });
     }
   };
 
