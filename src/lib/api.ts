@@ -58,7 +58,16 @@ export async function createPayment(userId: string): Promise<{
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ userId }),
   });
-  return res.json();
+  const text = await res.text();
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return {
+      error: 'Payment creation failed',
+      message: res.ok ? '支付服务返回了异常响应' : `支付服务暂时不可用（${res.status}）`,
+    };
+  }
 }
 
 /**

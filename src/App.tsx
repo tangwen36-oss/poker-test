@@ -229,7 +229,12 @@ const TestPage = ({ question, currentIndex, total, onAnswer, onBack }: any) => {
 // --- Main App ---
 
 export default function App() {
-  const [screen, setScreen] = useState<'home' | 'test' | 'result' | 'premium'>('home');
+  const isMockPaidMode =
+    typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).get('mockPaid') === '1';
+  const [screen, setScreen] = useState<'home' | 'test' | 'result' | 'premium'>(
+    isMockPaidMode ? 'premium' : 'home'
+  );
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>[]>([]);
   
@@ -300,8 +305,12 @@ export default function App() {
     if (mockPaid === '1') {
       const previewAnswers = storedAnswers ? JSON.parse(storedAnswers) : mockPreviewAnswers;
       setHasPaid(true);
+      setLastResultType(storedLastResultType || 'TAG');
       setAnswers(previewAnswers);
       localStorage.setItem('hasPaid', 'true');
+      if (!storedLastResultType) {
+        localStorage.setItem('lastResultType', 'TAG');
+      }
       if (!storedAnswers) {
         localStorage.setItem('lastAnswers', JSON.stringify(previewAnswers));
       }
