@@ -1,0 +1,53 @@
+-- ====================================
+-- 德州扑克测试 - Supabase 数据库初始化
+-- ====================================
+
+-- 1. 用户表
+CREATE TABLE IF NOT EXISTS poker_users (
+  user_id       TEXT PRIMARY KEY,
+  has_paid      BOOLEAN NOT NULL DEFAULT FALSE,
+  last_result_type TEXT,
+  last_answers  JSONB,
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- 2. 支付记录表
+CREATE TABLE IF NOT EXISTS payment_records (
+  id             BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  user_id        TEXT NOT NULL,
+  out_trade_no   TEXT NOT NULL UNIQUE,
+  zpay_trade_no  TEXT,
+  amount         NUMERIC(10,2) NOT NULL DEFAULT 9.90,
+  status         TEXT NOT NULL DEFAULT 'pending',    -- pending / success / failed
+  payment_type   TEXT NOT NULL DEFAULT 'wxpay',
+  raw_notify_data JSONB,
+  notify_count   INTEGER NOT NULL DEFAULT 0,
+  paid_at        TIMESTAMPTZ,
+  created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- 索引：按 user_id 查询支付记录
+CREATE INDEX IF NOT EXISTS idx_payment_records_user_id ON payment_records(user_id);
+
+-- 3. RLS 策略
+-- 启用 RLS
+ALTER TABLE poker_users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE payment_records ENABLE ROW LEVEL SECURITY;
+
+-- poker_users: 允许 service_role 完全访问（API 路由使用 service_role_key）
+-- 不给 anon 角色任何直接访问权限，所有操作都通过 API 路由
+CREATE POLICY "Service role full access on poker_users"
+  ON poker_users
+  FOR ALL
+  TO service_role
+  USING (true)
+  WITH CHECK (true);
+
+CREATE POLICY "Service role full access on payment_records"
+  ON payment_records
+  FOR ALL
+  TO service_role
+  USING (true)
+  WITH CHECK (true);
