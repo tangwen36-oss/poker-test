@@ -63,6 +63,12 @@ function getClientIp(req: VercelRequest): string {
   return (req.headers['x-real-ip'] as string) || '127.0.0.1';
 }
 
+function getRequestOrigin(req: VercelRequest): string {
+  const proto = String(req.headers['x-forwarded-proto'] || 'https');
+  const host = String(req.headers['x-forwarded-host'] || req.headers.host || '');
+  return `${proto}://${host}`;
+}
+
 /**
  * POST /api/create-payment
  * Body: { userId }
@@ -150,15 +156,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    const returnUrl = ZPAY_RETURN_URL
-      ? `${ZPAY_RETURN_URL}${ZPAY_RETURN_URL.includes('?') ? '&' : '?'}out_trade_no=${outTradeNo}`
+    const requestOrigin = getRequestOrigin(req);
+    const returnBaseUrl = requestOrigin || ZPAY_RETURN_URL;
+    const notifyUrl = ZPAY_NOTIFY_URL || `${requestOrigin}/api/zpay-notify`;
+    const returnUrl = returnBaseUrl
+      ? `${returnBaseUrl}${returnBaseUrl.includes('?') ? '&' : '?'}out_trade_no=${outTradeNo}`
       : '';
 
     const payParams: Record<string, string> = {
       pid: ZPAY_PID,
       type: 'wxpay',
       out_trade_no: outTradeNo,
-      notify_url: ZPAY_NOTIFY_URL,
+      notify_url: notifyUrl,
       name: '德州扑克玩家画像-策略解锁',
       money: '9.90',
       clientip: getClientIp(req),

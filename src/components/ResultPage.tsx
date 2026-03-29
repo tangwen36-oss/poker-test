@@ -370,7 +370,7 @@ https://poker.life-algo.xyz/`;
         <div className="mb-3">
           <button 
             onClick={handleUnlock}
-            disabled={isUnlocking || hasPaid}
+            disabled={isUnlocking}
             className={`w-full py-3.5 rounded-xl border active:scale-[0.98] transition-all relative overflow-hidden group flex items-center justify-center gap-2 shadow-[0_12px_28px_rgba(0,0,0,0.3)] disabled:opacity-80 disabled:cursor-not-allowed disabled:active:scale-100 ${
               hasPaid 
                 ? 'bg-zinc-800 border-zinc-600 text-zinc-400' 
@@ -387,7 +387,7 @@ https://poker.life-algo.xyz/`;
                   处理中...
                 </>
               ) : hasPaid ? (
-                '已解锁'
+                '查看已解锁报告'
               ) : (
                 '¥9.9元解锁策略'
               )}
