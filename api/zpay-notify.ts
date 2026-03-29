@@ -8,11 +8,11 @@ import { createClient } from '@supabase/supabase-js';
  * needed for this function and does not fail with runtime module resolution errors.
  */
 
-const ZPAY_KEY = process.env.ZPAY_KEY || '';
+const ZPAY_KEY = (process.env.ZPAY_KEY || '').trim();
 
 function getSupabaseAdmin() {
-  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
-  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+  const supabaseUrl = (process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '').trim();
+  const supabaseServiceKey = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
 
   if (!supabaseUrl || !supabaseServiceKey) {
     throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
