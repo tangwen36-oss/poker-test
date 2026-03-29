@@ -91,3 +91,8 @@ export function isWechatBrowser(): boolean {
   const ua = navigator.userAgent.toLowerCase();
   return ua.includes('micromessenger');
 }
+
+export function isMobileBrowser(): boolean {
+  const ua = navigator.userAgent.toLowerCase();
+  return /android|iphone|ipad|ipod|mobile/.test(ua);
+}

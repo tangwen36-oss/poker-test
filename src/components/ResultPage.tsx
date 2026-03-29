@@ -4,7 +4,7 @@ import { Lock, Check, RotateCcw, Swords, Bomb, Rocket, X, Share2 } from 'lucide-
 import { getFinalResult } from '../lib/scoring';
 import { questions } from '../data/questions';
 import { resultsData } from '../data/results';
-import { createPayment, isWechatBrowser } from '../lib/api';
+import { createPayment, isMobileBrowser, isWechatBrowser } from '../lib/api';
 
 export const ResultPage: React.FC<{ 
   answers: Record<string, number>[], 
@@ -87,8 +87,8 @@ https://poker.life-algo.xyz/`;
         : (result.payurl || result.payurl2 || result.qrcode);
 
       if (payUrl) {
-        if (isWechat) {
-          window.alert('微信支付完成后，如未自动返回，请关闭支付页，再回首页点击“查看已解锁报告”。');
+        if (isMobileBrowser()) {
+          window.alert('支付完成后，如未自动返回，请关闭支付页，再回首页点击“查看已解锁报告”。');
         }
         // 跳转到支付页面
         window.location.href = payUrl;
