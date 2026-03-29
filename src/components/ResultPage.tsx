@@ -52,6 +52,7 @@ export const ResultPage: React.FC<{
   const mainName = match ? match[2] : resultInfo.name;
   const shareText = `我测了个德州形象测试
 结果说我是${mainName}😂
+你试试看你的呢
 https://poker.life-algo.xyz/`;
 
   const displayComment = tiltFlag ? (
