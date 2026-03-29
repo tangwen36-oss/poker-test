@@ -54,7 +54,7 @@ const PlayingCard = ({ rank, suit, color, rotate, size = 'normal', facedown = fa
   );
 };
 
-const HomePage: React.FC<{ onStart: () => void, hasLastResult?: boolean, onRestore?: () => void }> = ({ onStart, hasLastResult, onRestore }) => (
+const HomePage: React.FC<{ onStart: () => void, hasLastResult?: boolean, hasPaid?: boolean, onRestore?: () => void }> = ({ onStart, hasLastResult, hasPaid, onRestore }) => (
   <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
@@ -88,7 +88,7 @@ const HomePage: React.FC<{ onStart: () => void, hasLastResult?: boolean, onResto
           onClick={onRestore}
           className="w-full bg-white/10 text-white font-bold text-sm py-3 rounded-full shadow-lg active:scale-95 transition-transform border border-white/20 tracking-widest hover:bg-white/20 backdrop-blur-md"
         >
-          恢复上次测试结果
+          {hasPaid ? '查看已解锁报告' : '恢复上次测试结果'}
         </button>
       )}
     </div>
@@ -425,6 +425,7 @@ export default function App() {
               key="home" 
               onStart={handleStart} 
               hasLastResult={hasRestorableResult}
+              hasPaid={hasPaid}
               onRestore={handleRestoreResult}
             />
           )}

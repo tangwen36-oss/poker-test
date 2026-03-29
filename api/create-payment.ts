@@ -159,9 +159,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const requestOrigin = getRequestOrigin(req);
     const returnBaseUrl = requestOrigin || ZPAY_RETURN_URL;
     const notifyUrl = ZPAY_NOTIFY_URL || `${requestOrigin}/api/zpay-notify`;
-    const returnUrl = returnBaseUrl
-      ? `${returnBaseUrl}${returnBaseUrl.includes('?') ? '&' : '?'}out_trade_no=${outTradeNo}`
-      : '';
+    const returnUrl = returnBaseUrl || '';
 
     const payParams: Record<string, string> = {
       pid: ZPAY_PID,
