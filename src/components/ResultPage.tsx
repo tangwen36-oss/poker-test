@@ -87,6 +87,9 @@ https://poker.life-algo.xyz/`;
         : (result.payurl || result.payurl2 || result.qrcode);
 
       if (payUrl) {
+        if (isWechat) {
+          window.alert('微信支付完成后，如未自动返回，请关闭支付页，再回首页点击“查看已解锁报告”。');
+        }
         // 跳转到支付页面
         window.location.href = payUrl;
         // 注意：跳转后 isUnlocking 状态会在页面卸载时自然消失
