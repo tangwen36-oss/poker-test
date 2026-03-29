@@ -33,6 +33,19 @@ export const ResultPage: React.FC<{
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [copyStatus, setCopyStatus] = useState<'idle' | 'done'>('idle');
+  const [socialProofIndex, setSocialProofIndex] = useState(0);
+
+  useEffect(() => {
+    if (hasPaid) {
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setSocialProofIndex((current) => (current + 1) % 2);
+    }, 2200);
+
+    return () => window.clearInterval(timer);
+  }, [hasPaid]);
 
   const match = resultInfo.name.match(/(.+?)（(.+?)）/);
   const prefix = match ? match[1] : resultInfo.name;
@@ -50,6 +63,7 @@ https://poker.life-algo.xyz/`;
   ) : (
     resultInfo.comment
   );
+  const socialProofItems = ['139人付款', '47人好评'];
 
   const handleUnlock = async () => {
     if (hasPaid) {
@@ -370,7 +384,26 @@ https://poker.life-algo.xyz/`;
           </div>
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 relative">
+          {!hasPaid && (
+            <div className="absolute -top-3 right-3 z-20 pointer-events-none">
+              <div className="h-7 min-w-[88px] px-3 rounded-full border border-amber-100/25 bg-black/85 shadow-[0_10px_18px_rgba(0,0,0,0.32),0_0_18px_rgba(251,191,36,0.16)] backdrop-blur-md overflow-hidden flex items-center justify-center">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={socialProofItems[socialProofIndex]}
+                    initial={{ y: 18, opacity: 0, rotateX: -70 }}
+                    animate={{ y: 0, opacity: 1, rotateX: 0 }}
+                    exit={{ y: -18, opacity: 0, rotateX: 70 }}
+                    transition={{ duration: 0.35, ease: 'easeOut' }}
+                    className="text-[11px] font-bold tracking-wide text-amber-200 whitespace-nowrap"
+                    style={{ transformOrigin: '50% 100%' }}
+                  >
+                    {socialProofItems[socialProofIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </div>
+            </div>
+          )}
           <button 
             onClick={handleUnlock}
             disabled={isUnlocking}
