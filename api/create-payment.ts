@@ -8,15 +8,19 @@ import { createClient } from '@supabase/supabase-js';
  * needed for this function and does not fail with runtime module resolution errors.
  */
 
-const ZPAY_PID = (process.env.ZPAY_PID || '').trim();
-const ZPAY_KEY = (process.env.ZPAY_KEY || '').trim();
-const ZPAY_NOTIFY_URL = (process.env.ZPAY_NOTIFY_URL || '').trim();
-const ZPAY_RETURN_URL = (process.env.ZPAY_RETURN_URL || '').trim();
+function sanitizeEnv(value?: string) {
+  return (value || '').replace(/[\r\n]+/g, '').trim();
+}
+
+const ZPAY_PID = sanitizeEnv(process.env.ZPAY_PID);
+const ZPAY_KEY = sanitizeEnv(process.env.ZPAY_KEY);
+const ZPAY_NOTIFY_URL = sanitizeEnv(process.env.ZPAY_NOTIFY_URL);
+const ZPAY_RETURN_URL = sanitizeEnv(process.env.ZPAY_RETURN_URL);
 const ZPAY_SUBMIT_URL = 'https://z-pay.cn/submit.php';
 
 function getSupabaseAdmin() {
-  const supabaseUrl = (process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '').trim();
-  const supabaseServiceKey = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
+  const supabaseUrl = sanitizeEnv(process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL);
+  const supabaseServiceKey = sanitizeEnv(process.env.SUPABASE_SERVICE_ROLE_KEY);
 
   if (!supabaseUrl || !supabaseServiceKey) {
     throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
