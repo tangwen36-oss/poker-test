@@ -41,7 +41,10 @@ async function selectFromExistingTable(supabase: SupabaseClient) {
 
     const normalizedMessage = error.message.toLowerCase();
     const relationMissing =
+      error.code === 'PGRST205' ||
       error.code === '42P01' ||
+      normalizedMessage.includes('schema cache') ||
+      normalizedMessage.includes('could not find the table') ||
       normalizedMessage.includes('relation') ||
       normalizedMessage.includes('does not exist');
 
