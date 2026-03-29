@@ -1,4 +1,3 @@
-import https from 'https';
 import { createHash } from 'crypto';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
@@ -13,8 +12,7 @@ const ZPAY_PID = process.env.ZPAY_PID || '';
 const ZPAY_KEY = process.env.ZPAY_KEY || '';
 const ZPAY_NOTIFY_URL = process.env.ZPAY_NOTIFY_URL || '';
 const ZPAY_RETURN_URL = process.env.ZPAY_RETURN_URL || '';
-const ZPAY_API_URL = 'https://z-pay.cn/mapi.php';
-const ZPAY_REQUEST_TIMEOUT_MS = 10000;
+const ZPAY_SUBMIT_URL = 'https://z-pay.cn/submit.php';
 
 function getSupabaseAdmin() {
   const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
@@ -68,7 +66,7 @@ function getClientIp(req: VercelRequest): string {
  * 1. 确保 poker_users 记录存在
  * 2. 检查是否已支付（已支付直接返回）
  * 3. 生成订单号，写入 payment_records (pending)
- * 4. 调用 ZPay mapi.php 创建支付
+ * 4. 直接生成 ZPay submit.php 跳转地址
  * 5. 返回支付跳转地址给前端
  */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -169,65 +167,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const sign = createZPaySign(payParams, ZPAY_KEY);
-    const formBody = new URLSearchParams({
+    const submitUrl = `${ZPAY_SUBMIT_URL}?${new URLSearchParams({
       ...payParams,
       sign,
       sign_type: 'MD5',
-    });
-
-    const zpayData: any = await new Promise((resolve, reject) => {
-      const upstreamReq = https.request(ZPAY_API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Content-Length': Buffer.byteLength(formBody.toString()),
-        },
-      }, (upstreamRes) => {
-        let data = '';
-        upstreamRes.on('data', (chunk: Buffer) => {
-          data += chunk;
-        });
-        upstreamRes.on('end', () => {
-          try {
-            resolve(JSON.parse(data));
-          } catch {
-            resolve({ code: -1, msg: 'JSON Parse Error', raw: data });
-          }
-        });
-      });
-
-      upstreamReq.setTimeout(ZPAY_REQUEST_TIMEOUT_MS, () => {
-        upstreamReq.destroy(new Error(`ZPay request timed out after ${ZPAY_REQUEST_TIMEOUT_MS}ms`));
-      });
-      upstreamReq.on('error', reject);
-      upstreamReq.write(formBody.toString());
-      upstreamReq.end();
-    });
-
-    if (zpayData.code !== 1) {
-      console.error('ZPay API error:', zpayData);
-      return res.status(502).json({
-        error: 'Payment creation failed',
-        message: zpayData.msg || 'Unknown ZPay error',
-      });
-    }
+    }).toString()}`;
 
     return res.status(200).json({
       outTradeNo,
-      payurl: zpayData.payurl || null,
-      payurl2: zpayData.payurl2 || null,
-      qrcode: zpayData.qrcode || null,
-      img: zpayData.img || null,
-      zpayOrderId: zpayData.O_id || null,
+      payurl: submitUrl,
+      payurl2: submitUrl,
+      qrcode: null,
+      img: null,
+      zpayOrderId: null,
     });
   } catch (err) {
     console.error('Unexpected error in create-payment:', err);
-    if (err instanceof Error && err.message.includes('timed out')) {
-      return res.status(504).json({
-        error: 'Payment gateway timeout',
-        message: 'ZPay did not respond in time',
-      });
-    }
     return res.status(500).json({ error: 'Internal server error' });
   }
 }
